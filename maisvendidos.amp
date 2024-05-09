@@ -1,0 +1,43 @@
+%%[
+
+
+  SET @categoria= [Calçados - Tênis]
+  SET SET @MaisVendidos = LookupOrderedRows("tb_Products", 0,"id DESC", "product_type", @categoria)
+
+
+
+
+  SET @PrimeiraLinhaMaisVendidos = " MaisVendidos " 
+  SET @produtos = LookupRows("tb_Products", 4 "product_type ", @categoria) 
+  SET @QuantidadeLinhas = rowcount(@MaisVendidos) 
+ 
+
+
+ if @QuantidadeLinhas > 0 then 
+ for @@contador = 1 to @QuantidadeLinhas do
+ 
+ SET @PrimeiraLinhaMaisVendidos = Row(@MaisVendidos, @contador)
+ 
+   
+    SET @Nome = field(@PrimeiraLinhaMaisVendidos, "title")
+    SET @preco = field(@PrimeiraLinhaMaisVendidos, "price")
+    SET @imagem = Field(@PrimeiraLinhaMaisVendidos, "image_link")
+    SET @link = Field(@PrimeiraLinhaMaisVendidos, "link")
+  next @contador
+endif
+]%%
+
+
+ <td>
+    <a href="%%=v(@link)=%%" target="_Blank" style="text-decoration: none; color: #000">
+      <img src="%%=v(@imagem)=%%" style="width: 200px; height: auto">
+      <p style="max-width: 200px !important">%%=v(@nome)=%%</p>
+      <b>%%=v(@preco)=%%</b>
+      <div
+        style="width: 200px;height: 35px;background-color: #80b46e;display: flex;align-items: center;justify-content: center; margin-top: 5px; border-radius: 5px;">
+        <p style="color: #fff; text-align: center;">
+          COMPRAR
+        </p>
+      </div>
+    </a>
+  </td>
